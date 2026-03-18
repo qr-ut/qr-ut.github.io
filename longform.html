@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taking you to the Utah voter registration site!</title>
+    <script>
+    function redirect() {
+        // 1. Get the data from the QR link
+        const params = new URLSearchParams(window.location.search);
+
+
+
+
+        // this is the long link:
+        // https://secure.utah.gov/voterreg/login.html?selection=REGISTER
+        const destination = "https://secure.utah.gov/voterreg/login.html?selection=REGISTER"; 
+
+
+
+
+        const qrId = params.get('id'); // This is the tag you printed, e.g., "poster_v1"
+
+        // obscured!!!!
+        const pt1 = "htt";
+        const pt2 = "ps://doc";
+        const pt3 = "s.goog";
+        const pt4 = "le.c";
+        const pt5 = "om/for";
+        const pt6 = "ms/d/e/1FAIpQLSfD1SXNdxSvgmYJx7TW91tsZtRC3XntX1U973N5FVMMh3YTYA/fo";
+        const pt7 = "rmRes";
+        const pt8 = "ponse";
+
+        const fullsend = pt1 + pt2 + pt3 + pt4 + pt5 + pt6 + pt7 + pt8;
+        const entryField = "entry.384352139"; // Replace with your specific entry ID
+
+        // 3. Send data to Google Sheets (if an ID exists)
+        if (qrId) {
+                // Construct the payload for Google Forms
+                const formData = new FormData();
+                formData.append(entryField, qrId);
+                formData.append("submit", "Submit");
+
+                // sendBeacon is asynchronous and survives the page redirect
+                navigator.sendBeacon(fullsend, formData);
+            }
+
+            // Redirect immediately. No delay needed with sendBeacon.
+            if (destination) {
+                window.location.replace(destination);
+            } else {
+                document.body.innerText = "Error: No destination link provided.";
+            }
+    }
+</script>
+</head>
+<body onload="redirect()">
+    <p>Taking you to the Utah voter registration site!</p>
+</body>
+</html>
